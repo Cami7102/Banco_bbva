@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { View, TextInput, Text, TouchableOpacity, StyleSheet, Alert } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
+import { Ionicons } from '@expo/vector-icons';
 
 export default function SignUpScreen() {
   const [nombre, setNombre] = useState('');
@@ -13,11 +14,10 @@ export default function SignUpScreen() {
   const navigation = useNavigation();
 
   const handleSignUp = () => {
-    // Aquí podrías agregar la lógica para registrar al usuario
     if (nombre && apellidos && ci && celular && email && password && confirmPassword) {
       if (password === confirmPassword) {
         Alert.alert('Registro exitoso', 'Tu cuenta ha sido creada correctamente');
-        navigation.navigate('Login'); // Navega de vuelta a Login
+        navigation.navigate('Login');
       } else {
         Alert.alert('Error', 'Las contraseñas no coinciden');
       }
@@ -28,6 +28,13 @@ export default function SignUpScreen() {
 
   return (
     <View style={styles.container}>
+      <TouchableOpacity
+        style={styles.backButton}
+        onPress={() => navigation.navigate('Login')}
+      >
+        <Ionicons name="arrow-back" size={24} color="#ffffff" />
+      </TouchableOpacity>
+
       <Text style={styles.title}>Crear Cuenta</Text>
 
       <TextInput
@@ -108,6 +115,13 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     alignItems: 'center',
     paddingHorizontal: 20,
+  },
+  backButton: {
+    position: 'absolute',
+    top: 40,
+    left: 20,
+    padding: 10,
+    zIndex: 1,
   },
   title: {
     fontSize: 24,
